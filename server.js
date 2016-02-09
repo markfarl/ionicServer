@@ -665,6 +665,7 @@ app.post('/auth/facebookuser', function(req, res) {
           user.facebook = profile.id;
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
+          console.log(user);
           user.save(function() {
             var token = createJWT(user);
             res.send({ token: token, test: 'pissface3' });
