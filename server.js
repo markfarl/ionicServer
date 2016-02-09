@@ -649,7 +649,7 @@ app.post('/auth/facebookuser', function(req, res) {
             user.displayName = user.displayName || profile.name;
             user.save(function() {
               var token = createJWT(user);
-              res.send({ token: token });
+              res.send({ token: token, test: 'pissface2'  });
             });
           });
         });
@@ -657,8 +657,9 @@ app.post('/auth/facebookuser', function(req, res) {
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ facebook: profile.id }, function(err, existingUser) {
           if (existingUser) {
+            console.log(existingUser)
             var token = createJWT(existingUser);
-            return res.send({ token: token });
+            return res.send({ token: token, test: 'pissface' });
           }
           var user = new User();
           user.facebook = profile.id;
@@ -666,7 +667,7 @@ app.post('/auth/facebookuser', function(req, res) {
           user.displayName = profile.name;
           user.save(function() {
             var token = createJWT(user);
-            res.send({ token: token });
+            res.send({ token: token, test: 'pissface3' });
           });
         });
       }
