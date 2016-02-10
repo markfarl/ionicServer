@@ -668,7 +668,7 @@ app.post('/auth/facebookuser', function(req, res) {
           console.log(user);
           user.save(function() {
             var token = createJWT(user);
-            res.send({ token: token, test: 'pissface3' });
+            res.send({ token: token, test: 'pissface3', userObject: user });
           });
         });
       }
