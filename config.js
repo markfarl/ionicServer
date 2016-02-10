@@ -1,6 +1,6 @@
 module.exports = {
   // App Settings
-  MONGO_URI: process.env.MONGO_URI || 'localhost',
+  MONGO_URI: process.env.MONGO_URI || 'localhost:27017',
   TOKEN_SECRET: process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET',
 
   // OAuth 2.0
