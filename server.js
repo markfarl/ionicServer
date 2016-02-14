@@ -666,9 +666,9 @@ app.post('/auth/facebookuser', function(req, res) {
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
           console.log(user);
-          user.save(function() {
+          user.save(function(err) {
             var token = createJWT(user);
-            res.send({ token: token, test: 'pissface3', userObject: user });
+            res.send({ token: token, test: 'pissface3', userObject: user, err: err });
           });
         });
       }
