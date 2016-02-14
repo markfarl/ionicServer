@@ -634,33 +634,36 @@ app.post('/auth/facebookuser', function(req, res) {
         return res.status(500).send({ message: profile.error.message });
       }
       if (req.headers.authorization) {
-        User.findOne({ facebook: profile.id }, function(err, existingUser) {
+        User.findOne({facebook: profile.id}, function (err, existingUser) {
           if (existingUser) {
-            return res.status(409).send({ message: 'There is already a Facebook account that belongs to you' });
+            return res.status(409).send({message: 'There is already a Facebook account that belongs to you'});
           }
           var token = req.headers.authorization.split(' ')[1];
           var payload = jwt.decode(token, config.TOKEN_SECRET);
-          User.findById(payload.sub, function(err, user) {
+          User.findById(payload.sub, function (err, user) {
             if (!user) {
-              return res.status(400).send({ message: 'User not found' });
+              return res.status(400).send({message: 'User not found'});
             }
             user.facebook = profile.id;
             user.picture = user.picture || 'https://graph.facebook.com/v2.3/' + profile.id + '/picture?type=large';
             user.displayName = user.displayName || profile.name;
-            user.save(function() {
+            user.save(function () {
               var token = createJWT(user);
-              res.send({ token: token, test: 'pissface2'  });
+              res.send({token: token, test: 'pissface2'});
             });
           });
         });
+      } else {
+
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ facebook: profile.id }, function(err, existingUser) {
           if (existingUser) {
-            console.log(existingUser)
+            console.log(existingUser);
             var token = createJWT(existingUser);
             return res.send({ token: token, test: 'pissface' });
           }
           var user = new User();
+          user.email = profile.email;
           user.facebook = profile.id;
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
@@ -672,7 +675,6 @@ app.post('/auth/facebookuser', function(req, res) {
             res.send({ token: token, test: 'pissface3', userObject: user, err: err });
           });
         });
-      } else {
       }
     });
 
