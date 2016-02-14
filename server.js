@@ -653,7 +653,6 @@ app.post('/auth/facebookuser', function(req, res) {
             });
           });
         });
-      } else {
         // Step 3b. Create a new user account or return an existing one.
         User.findOne({ facebook: profile.id }, function(err, existingUser) {
           if (existingUser) {
@@ -666,11 +665,14 @@ app.post('/auth/facebookuser', function(req, res) {
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
           console.log(user);
+          console.log('profile data:');
+          console.log(profile);
           user.save(function(err) {
             var token = createJWT(user);
             res.send({ token: token, test: 'pissface3', userObject: user, err: err });
           });
         });
+      } else {
       }
     });
 
