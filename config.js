@@ -1,8 +1,8 @@
 module.exports = {
   // App Settings
   MONGO_URI: process.env.MONGO_URI || 'localhost:27017',
-  TOKEN_SECRET: process.env.TOKEN_SECRET || 'YOUR_UNIQUE_JWT_TOKEN_SECRET',
-
+  TOKEN_SECRET: process.env.TOKEN_SECRET || 'mysecrettokenisthisnow123456789',
+  //YOUR_UNIQUE_JWT_TOKEN_SECRET
   // OAuth 2.0
   FACEBOOK_SECRET: process.env.FACEBOOK_SECRET || '09021d51d79b2715eb6366e59071f892',
   FOURSQUARE_SECRET: process.env.FOURSQUARE_SECRET || 'YOUR_FOURSQUARE_CLIENT_SECRET',

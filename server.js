@@ -22,7 +22,7 @@ var request = require('request');
 var config = require('./config');
 
 var userSchema = new mongoose.Schema({
-  email: { type: String, unique: true, lowercase: true },
+  email: { type: String, lowercase: true },
   password: { type: String, select: false },
   displayName: String,
   picture: String,
