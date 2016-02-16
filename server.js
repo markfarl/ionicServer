@@ -632,6 +632,7 @@ app.post('/auth/facebookuser', function(req, res) {
   var getUserFeed = function(){
     return request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
       console.log('Calling user feed on graph');
+      console.log(data);
       if (response.statusCode !== 200) {
         return { message: data.error.message };
       }else{
