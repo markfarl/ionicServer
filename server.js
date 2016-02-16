@@ -619,6 +619,7 @@ app.post('/auth/facebookuser', function(req, res) {
   var accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
   var graphApiUrl = 'https://graph.facebook.com/v2.5/me?fields=' + fields.join(',');
   var graphUserFeedApiUrl = 'https://graph.facebook.com/v2.5/me/feed';
+  var userFeedObj = {};
   var accessToken = {
     access_token: req.body.access_token,
     token_type: req.body.token_type,
@@ -629,17 +630,15 @@ app.post('/auth/facebookuser', function(req, res) {
 
 
   //request for user feed data called when posting back large json object
-  var getUserFeed = function(){
-    return request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
-      console.log('Calling user feed on graph');
-      console.log(data);
-      if (response.statusCode !== 200) {
-        return { message: data.error.message };
-      }else{
-        return data;
-      }
-    });
-  };
+  request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
+    console.log('Calling user feed on graph');
+    if (response.statusCode !== 200) {
+      userFeedObj = { message: data.error.message };
+    }else{
+      userFeedObj = data;
+    }
+  });
+
 
   // Step 1. Exchange authorization code for access token.REMOVED Done on frontend
 
@@ -664,7 +663,7 @@ app.post('/auth/facebookuser', function(req, res) {
             user.displayName = user.displayName || profile.name;
             user.save(function () {
               var token = createJWT(user);
-              res.send({token: token, status: 'user already logged in', userFeed: getUserFeed() });
+              res.send({token: token, status: 'user already logged in', userFeed: userFeedObj });
             });
           });
         });
@@ -675,7 +674,7 @@ app.post('/auth/facebookuser', function(req, res) {
           if (existingUser) {
             console.log(existingUser);
             var token = createJWT(existingUser);
-            return res.send({ token: token, status: 'existing user logeed in', userFeed: getUserFeed() });
+            return res.send({ token: token, status: 'existing user logeed in', userFeed: userFeedObj });
           }
           var user = new User();
           user.email = profile.email;
@@ -687,7 +686,7 @@ app.post('/auth/facebookuser', function(req, res) {
           console.log(profile);
           user.save(function(err) {
             var token = createJWT(user);
-            res.send({ token: token, staus: 'New user created', userObject: user, userFeed: getUserFeed() });
+            res.send({ token: token, staus: 'New user created', userObject: user, userFeed: userFeedObj });
           });
         });
       }
