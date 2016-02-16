@@ -630,7 +630,7 @@ app.post('/auth/facebookuser', function(req, res) {
 
   //request for user feed data called when posting back large json object
   var getUserFeed = function(){
-    request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
+    return request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
       console.log('Calling user feed on graph');
       if (response.statusCode !== 200) {
         return { message: data.error.message };
