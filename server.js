@@ -630,8 +630,7 @@ app.post('/auth/facebookuser', function(req, res) {
 
 
   //request for user feed data called when posting back large json object
-  var getFeedGraph = function(){
-    return request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
+  var getFeedGraph = request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
       console.log('Calling user feed on graph');
       if (response.statusCode !== 200) {
         return { message: data.error.message };
@@ -639,7 +638,6 @@ app.post('/auth/facebookuser', function(req, res) {
         return data;
       }
     });
-  };
 
   console.log(getFeedGraph());
   // Step 1. Exchange authorization code for access token.REMOVED Done on frontend
