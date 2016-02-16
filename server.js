@@ -631,19 +631,17 @@ app.post('/auth/facebookuser', function(req, res) {
 
   //request for user feed data called when posting back large json object
   var getFeedGraph = function(){
-    var userFeedObj ={};
-    request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
+    return request.get({ url: graphUserFeedApiUrl, qs: accessToken, json: true }, function(err, response, data) {
       console.log('Calling user feed on graph');
       if (response.statusCode !== 200) {
-        userFeedObj = { message: data.error.message };
+        return { message: data.error.message };
       }else{
-        userFeedObj = data;
+        return data;
       }
     });
-    return userFeedObj;
   };
 
-
+  console.log(getFeedGraph());
   // Step 1. Exchange authorization code for access token.REMOVED Done on frontend
 
     // Step 2. Retrieve profile information about the current user.
@@ -667,7 +665,7 @@ app.post('/auth/facebookuser', function(req, res) {
             user.displayName = user.displayName || profile.name;
             user.save(function () {
               var token = createJWT(user);
-              res.send({token: token, status: 'user already logged in', userFeed: userFeedObj });
+              res.send({token: token, status: 'user already logged in', userFeed: getFeedGraph() });
             });
           });
         });
@@ -690,7 +688,7 @@ app.post('/auth/facebookuser', function(req, res) {
           console.log(profile);
           user.save(function(err) {
             var token = createJWT(user);
-            res.send({ token: token, staus: 'New user created', userObject: user, userFeed: userFeedObj });
+            res.send({ token: token, staus: 'New user created', userObject: user, userFeed: getFeedGraph() });
           });
         });
       }
