@@ -156,6 +156,7 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
     user.displayName = req.body.displayName || user.displayName;
     user.email = req.body.email || user.email;
     user.ageRange = req.body.ageRange || user.ageRange;
+    console.log(user.ageRange);
     user.save(function(err) {
       res.status(200).end();
     });
