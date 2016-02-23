@@ -636,6 +636,8 @@ app.post('/auth/facebookuser', function(req, res) {
         return { message: data.error.message };
       }else{
         console.log('start retriev function');
+        var feedData = data;
+
         retreiveProfile(data);
       }
     });
@@ -652,7 +654,7 @@ app.post('/auth/facebookuser', function(req, res) {
       if (req.headers.authorization) {
         User.findOne({facebook: profile.id}, function (err, existingUser) {
           if (existingUser) {
-            return res.status(409).send({message: 'There is already a Facebook account that belongs to you'});
+            return res.status(200).send({message: 'There is already a Facebook account that belongs to you'});
           }
           var token = req.headers.authorization.split(' ')[1];
           var payload = jwt.decode(token, config.TOKEN_SECRET);
