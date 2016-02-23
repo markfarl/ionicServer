@@ -36,7 +36,8 @@ var userSchema = new mongoose.Schema({
   live: String,
   yahoo: String,
   twitter: String,
-  twitch: String
+  twitch: String,
+  ageRange: String
 });
 
 userSchema.pre('save', function(next) {
