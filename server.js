@@ -37,7 +37,10 @@ var userSchema = new mongoose.Schema({
   yahoo: String,
   twitter: String,
   twitch: String,
-  ageRange: String
+  ageRange: String,
+  gender: String,
+  country: String,
+  education: String
 });
 
 userSchema.pre('save', function(next) {
@@ -157,6 +160,9 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
     user.displayName = req.body.displayName || user.displayName;
     user.email = req.body.email || user.email;
     user.ageRange = req.body.ageRange || user.ageRange;
+    user.gender = req.body.gender || user.gender;
+    user.country = req.body.country || user.country;
+    user.education = req.body.education || user.education;
     console.log(user.ageRange);
     user.save(function(err) {
       res.status(200).end();
