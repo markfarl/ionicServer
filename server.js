@@ -619,6 +619,18 @@ app.post('/auth/facebook', function(req, res) {
   });
 });
 
+//Get sentiment from alyien servers
+app.get('/sentiment', function (req, res) {
+  var text = req.query.text;
+  var callback = req.query.callback;
+
+  unirest.get("https://aylien-text.p.mashape.com/sentiment?text="+encodeURIComponent(text))
+      .header("X-Mashape-Key", mashape_key)
+      .header("Accept", "application/json")
+      .end(function (result) {
+        res.send(callback + "(" + JSON.stringify(result.body) + ")");
+      });
+});
 
 /* Create user with facebook Login
 **MF**
