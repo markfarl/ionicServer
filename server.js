@@ -40,7 +40,12 @@ var userSchema = new mongoose.Schema({
   ageRange: String,
   gender: String,
   country: String,
-  education: String
+  education: String,
+  questions: {
+    question1: Number,
+    question2: Number,
+    question3: Number
+  }
 });
 
 userSchema.pre('save', function(next) {
@@ -164,6 +169,19 @@ app.put('/api/me', ensureAuthenticated, function(req, res) {
     user.country = req.body.country || user.country;
     user.education = req.body.education || user.education;
     console.log(user.ageRange);
+    user.save(function(err) {
+      res.status(200).end();
+    });
+  });
+});
+
+app.put('/api/me/questions', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    user.questions = req.body.questions
     user.save(function(err) {
       res.status(200).end();
     });
