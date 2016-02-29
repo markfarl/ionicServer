@@ -222,6 +222,19 @@ app.put('/api/me/likesdata', ensureAuthenticated, function(req, res) {
   });
 });
 
+app.put('/api/me/updatesentiment', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    user.sentiments = req.body.data;
+    user.save(function(err) {
+      res.status(200).end();
+    });
+  });
+});
+
 
 /*
  |--------------------------------------------------------------------------
@@ -684,16 +697,10 @@ app.post('/sentiment', function (req, res) {
       .header("Accept", "application/json")
       .end(function (result) {
         //Send to userDB
-        sendtoUserDb(result);
         res.send(JSON.stringify(result.body));
       });
 
-  var sendtoUserDb = function(data){
-    User.findById(req.user, function(err, user) {
-      user.sentiments = data;
-      user.save();
-    });
-  };
+
 });
 /*Create user with facebook Login
 **MF**
