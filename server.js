@@ -18,8 +18,11 @@ var jwt = require('jwt-simple');
 var moment = require('moment');
 var mongoose = require('mongoose');
 var request = require('request');
+var unirest = require('unirest');
 
 var config = require('./config');
+
+var mashape_key = "MASHAPE_AYLIEN_KEY";
 
 var userSchema = new mongoose.Schema({
   email: { type: String, lowercase: true },
