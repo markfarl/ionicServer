@@ -673,8 +673,8 @@ app.post('/auth/facebook', function(req, res) {
 //Get sentiment from alyien servers
 app.post('/sentiment', function (req, res) {
   console.log(req.body);
-  //var text = req.query.text;
-  var text =  req.body;
+  var text = 'I hate everythig';
+  //var text =  req.body;
  // var callback = req.query.callback;
 
   unirest.get("https://api.aylien.com/api/v1/sentiment?text="+encodeURIComponent(text))
