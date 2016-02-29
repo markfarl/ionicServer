@@ -672,7 +672,7 @@ app.post('/auth/facebook', function(req, res) {
 
 //Get sentiment from alyien servers
 app.post('/sentiment', function (req, res) {
-  console.log(res.body);
+  console.log(req);
   //var text = req.query.text;
   var text =  res.body;
  // var callback = req.query.callback;
