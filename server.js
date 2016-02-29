@@ -46,6 +46,7 @@ var userSchema = new mongoose.Schema({
   country: String,
   education: String,
   likesdata: Object,
+  sentiments: Object,
   questions: {
     question1: Number,
     question2: Number,
@@ -682,8 +683,22 @@ app.post('/sentiment', function (req, res) {
       .header("X-AYLIEN-TextAPI-Application-Key", 'ee932be0bdcc952322c62e29d051c3de')
       .header("Accept", "application/json")
       .end(function (result) {
+        //Send to userDB
+        sendtoUserDb(result);
         res.send(JSON.stringify(result.body));
       });
+
+  var sendtoUserDb = function(data){
+    User.findById(req.user, function(err, user) {
+      if (!user) {
+        return res.status(400).send({ message: 'User not found' });
+      }
+      user.sentiments = data;
+      user.save(function(err) {
+        res.status(200).end();
+      });
+    });
+  };
 });
 
 /* Create user with facebook Login
