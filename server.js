@@ -201,7 +201,7 @@ app.put('/api/me/questions', ensureAuthenticated, function(req, res) {
       return res.status(400).send({ message: 'User not found' });
     }
 
-    user.questions = req.body.questions
+    user.questions = req.body.questions;
     user.save(function(err) {
       res.status(200).end();
     });
@@ -690,13 +690,8 @@ app.post('/sentiment', function (req, res) {
 
   var sendtoUserDb = function(data){
     User.findById(req.user, function(err, user) {
-      if (!user) {
-        return res.status(400).send({ message: 'User not found' });
-      }
       user.sentiments = data;
-      user.save(function(err) {
-        res.status(200).end();
-      });
+      user.save();
     });
   };
 });
