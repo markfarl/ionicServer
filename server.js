@@ -672,7 +672,7 @@ app.post('/auth/facebook', function(req, res) {
 
 //Get sentiment from alyien servers
 app.post('/sentiment', function (req, res) {
-  console.log(req.query);
+  console.log(res);
   //var text = req.query.text;
   var text =  {'text': 'John is a very good football player!'};
  // var callback = req.query.callback;
