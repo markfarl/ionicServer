@@ -20,6 +20,7 @@ var mongoose = require('mongoose');
 var request = require('request');
 var unirest = require('unirest');
 
+
 var config = require('./config');
 
 var mashape_key = "MASHAPE_AYLIEN_KEY";
@@ -114,6 +115,10 @@ if (app.get('env') === 'production') {
   });
 }
 app.use(express.static(path.join(__dirname, '../../client')));
+
+
+
+
 
 /*
  |--------------------------------------------------------------------------
@@ -667,12 +672,14 @@ app.post('/auth/facebook', function(req, res) {
 
 //Get sentiment from alyien servers
 app.post('/sentiment', function (req, res) {
-  console.log(req);
-  var text = req.query.text;
+  console.log(req.query);
+  //var text = req.query.text;
+  var text =  {'text': 'John is a very good football player!'};
  // var callback = req.query.callback;
 
-  unirest.get("https://aylien-text.p.mashape.com/sentiment?text="+encodeURIComponent(text))
-      .header("X-Mashape-Key", mashape_key)
+  unirest.get("https://api.aylien.com/api/v1/sentiment?text="+encodeURIComponent(text))
+      .header("X-AYLIEN-TextAPI-Application-ID", 'fff5a847')
+      .header("X-AYLIEN-TextAPI-Application-Key", 'ee932be0bdcc952322c62e29d051c3de')
       .header("Accept", "application/json")
       .end(function (result) {
         res.send(JSON.stringify(result.body));
