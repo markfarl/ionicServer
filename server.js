@@ -673,7 +673,7 @@ app.post('/auth/facebook', function(req, res) {
 
 //Get sentiment from alyien servers
 app.post('/sentiment', function (req, res) {
-  console.log(req.body);
+  console.log(req.user);
   //var text = 'I hate everythig';
   var text =  req.body.join();
  // var callback = req.query.callback;
@@ -695,8 +695,7 @@ app.post('/sentiment', function (req, res) {
     });
   };
 });
-
-/* Create user with facebook Login
+/*Create user with facebook Login
 **MF**
 */
 app.post('/auth/facebookuser', function(req, res) {
