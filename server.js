@@ -44,6 +44,7 @@ var userSchema = new mongoose.Schema({
   gender: String,
   country: String,
   education: String,
+  likesdata: Object,
   questions: {
     question1: Number,
     question2: Number,
@@ -195,6 +196,20 @@ app.put('/api/me/questions', ensureAuthenticated, function(req, res) {
     }
 
     user.questions = req.body.questions
+    user.save(function(err) {
+      res.status(200).end();
+    });
+  });
+});
+
+
+app.put('/api/me/likesdata', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    user.likesdata = req.body.likesdata;
     user.save(function(err) {
       res.status(200).end();
     });
@@ -651,7 +666,7 @@ app.post('/auth/facebook', function(req, res) {
 });
 
 //Get sentiment from alyien servers
-app.get('/sentiment', function (req, res) {
+app.post('/sentiment', function (req, res) {
   console.log(req);
   var text = req.query.text;
  // var callback = req.query.callback;
