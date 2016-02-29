@@ -44,7 +44,17 @@ var userSchema = new mongoose.Schema({
   questions: {
     question1: Number,
     question2: Number,
-    question3: Number
+    question3: Number,
+    question4: Number,
+    question5: Number,
+    question6: Number,
+    question7: Number,
+    question8: Number,
+    question9: Number,
+    question10: Number,
+    question11: Number,
+    question12: Number,
+    question13: Number
   }
 });
 
@@ -639,14 +649,15 @@ app.post('/auth/facebook', function(req, res) {
 
 //Get sentiment from alyien servers
 app.get('/sentiment', function (req, res) {
+  console.log(req);
   var text = req.query.text;
-  var callback = req.query.callback;
+ // var callback = req.query.callback;
 
   unirest.get("https://aylien-text.p.mashape.com/sentiment?text="+encodeURIComponent(text))
       .header("X-Mashape-Key", mashape_key)
       .header("Accept", "application/json")
       .end(function (result) {
-        res.send(callback + "(" + JSON.stringify(result.body) + ")");
+        res.send(JSON.stringify(result.body));
       });
 });
 
