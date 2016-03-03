@@ -172,6 +172,12 @@ app.get('/api/me', ensureAuthenticated, function(req, res) {
   });
 });
 
+app.get('/api/me/questions', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    res.send(user.questions);
+  });
+});
+
 /*
  |--------------------------------------------------------------------------
  | PUT /api/me
@@ -747,7 +753,7 @@ app.post('/auth/facebookuser', function(req, res) {
           if (existingUser) {
             console.log(existingUser);
             var token = createJWT(existingUser);
-            return res.send({ token: token, status: 'existing user logeed in', userFeed: feedData });
+            return res.send({ token: token, status: 'existing user logeed in'});
           }
           var user = new User();
           user.email = profile.email;
@@ -759,7 +765,7 @@ app.post('/auth/facebookuser', function(req, res) {
           console.log(profile);
           user.save(function(err) {
             var token = createJWT(user);
-            res.send({ token: token, staus: 'New user created', userObject: user, userFeed: feedData });
+            res.send({ token: token, staus: 'New user created' });
           });
         });
 
