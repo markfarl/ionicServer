@@ -47,7 +47,7 @@ var userSchema = new mongoose.Schema({
   education: String,
   likesdata: Object,
   sentiments: Object,
-  questions: Object
+  questions: Schema.Types.Mixed,
 });
 
 userSchema.pre('save', function(next) {
