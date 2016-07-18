@@ -50,7 +50,26 @@ var userSchema = new mongoose.Schema({
   questions: {
     question1: Number,
     question2: Number,
-    question4: Number
+    question3: Number,
+    question4: Number,
+    question2_1: Number,
+    question2_2: Number,
+    question2_3: Number,
+    question2_4: Number,
+    question2_5: Number,
+    sharedCheck_PhotosFriends: Boolean,
+    sharedCheck_Photos: Boolean,
+    sharedCheck_Funny: Boolean,
+    sharedCheck_Sports: Boolean,
+    sharedCheck_Political: Boolean,
+    sharedCheck_music: Boolean,
+    sharedCheck_Other: Boolean,
+    isChecked_twitter: Boolean,
+    isChecked_Pinterest: Boolean,
+    isChecked_Linkedin: Boolean,
+    isChecked_Google: Boolean,
+    isChecked_Instagram: Boolean,
+    contactQuestion: Number
   }
 });
 
