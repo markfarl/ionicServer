@@ -48,9 +48,9 @@ var userSchema = new mongoose.Schema({
   likesdata: Object,
   sentiments: Object,
   questions: {
-    question1: String,
-    question2: String,
-    question4: String
+    question1: Number,
+    question2: Number,
+    question4: Number
   }
 });
 
