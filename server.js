@@ -58,6 +58,7 @@ var userSchema = new mongoose.Schema({
     question8: Number,
     question9: Number,
     question10: Number,
+    question11: Number,
     sharedCheck_PhotosFriends: Boolean,
     sharedCheck_Photos: Boolean,
     sharedCheck_Funny: Boolean,
@@ -65,6 +66,7 @@ var userSchema = new mongoose.Schema({
     sharedCheck_Political: Boolean,
     sharedCheck_music: Boolean,
     sharedCheck_Other: Boolean,
+    sharedChe_None: Boolean,
     isChecked_twitter: Boolean,
     isChecked_Pinterest: Boolean,
     isChecked_Linkedin: Boolean,
@@ -128,9 +130,6 @@ if (app.get('env') === 'production') {
 app.use(express.static(path.join(__dirname, '../../client')));
 
 
-
-
-
 /*
  |--------------------------------------------------------------------------
  | Login Required Middleware
@@ -187,6 +186,15 @@ app.get('/api/me/questions', ensureAuthenticated, function(req, res) {
     res.send(user.questions);
   });
 });
+
+app.get('/api/me/score', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    console.log('');
+
+    //res.send(user.questions);
+  });
+});
+
 
 /*
  |--------------------------------------------------------------------------
