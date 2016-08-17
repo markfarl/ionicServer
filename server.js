@@ -730,7 +730,7 @@ app.post('/sentiment', function (req, res) {
 **MF**
 */
 app.post('/auth/facebookuser', function(req, res) {
-  var fields = ['id', 'email', 'first_name', 'last_name', 'link', 'name'];
+  var fields = ['id', 'email', 'first_name', 'last_name', 'link', 'name', 'age_range','gender'];
   var accessTokenUrl = 'https://graph.facebook.com/v2.5/oauth/access_token';
   var graphApiUrl = 'https://graph.facebook.com/v2.5/me?fields=' + fields.join(',');
   var graphUserFeedApiUrl = 'https://graph.facebook.com/v2.5/me/feed';
@@ -774,10 +774,26 @@ app.post('/auth/facebookuser', function(req, res) {
             return res.send({ token: token, status: 'existing user logeed in'});
           }
           var user = new User();
+          var age;
+          if(profile.age_range.min==21){
+            age = 3;
+          }else if(profile.age_range.min==17){
+            age = 2;
+          }else if(profile.age_range.min==13){
+            age = 1;
+          }
+          var gender;
+          if(profile.gender == 'male'){
+            gender = 1;
+          }else if(profile.gender == 'female'){
+            gender = 2;
+          }
           user.email = profile.email;
           user.facebook = profile.id;
           user.picture = 'https://graph.facebook.com/' + profile.id + '/picture?type=large';
           user.displayName = profile.name;
+          user.gender = gender;
+          user.ageRange = age;
           console.log(user);
           console.log('profile data:');
           console.log(profile);
