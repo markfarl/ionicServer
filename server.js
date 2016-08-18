@@ -73,6 +73,19 @@ var userSchema = new mongoose.Schema({
     isChecked_Google: Boolean,
     isChecked_Instagram: Boolean,
     contactQuestion: Number
+  },
+  explicitQuestions: {
+    question1: Object,
+    question2: Object,
+    question3: Object,
+    question4: Object,
+    question5: Object,
+    question6: Object,
+    question7: Object,
+    question8: Object,
+    question9: Object,
+    question10: Object,
+    likepages: Object
   }
 });
 
@@ -226,6 +239,19 @@ app.put('/api/me/questions', ensureAuthenticated, function(req, res) {
     }
 
     user.questions = req.body.questions;
+    user.save(function(err) {
+      res.status(200).end();
+    });
+  });
+});
+
+app.put('/api/me/explicitquestions', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    user.explicitQuestions = req.body.explicitQuestions;
     user.save(function(err) {
       res.status(200).end();
     });
