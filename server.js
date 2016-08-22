@@ -85,7 +85,8 @@ var userSchema = new mongoose.Schema({
     question8: Object,
     question9: Object,
     question10: Object,
-    likepages: Object
+    likepages: Object,
+    explicitTotal: Number
   }
 });
 
@@ -195,6 +196,13 @@ app.get('/api/me', ensureAuthenticated, function(req, res) {
 });
 
 app.get('/api/me/questions', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    res.send(user.questions);
+  });
+});
+
+
+app.get('/api/me/explicitquestions', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
     res.send(user.questions);
   });
