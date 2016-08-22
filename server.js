@@ -204,7 +204,7 @@ app.get('/api/me/questions', ensureAuthenticated, function(req, res) {
 
 app.get('/api/me/explicitquestions', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
-    res.send(user.questions);
+    res.send(user.explicitQuestions);
   });
 });
 
