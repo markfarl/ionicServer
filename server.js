@@ -87,6 +87,11 @@ var userSchema = new mongoose.Schema({
     question10: Object,
     likepages: Object,
     explicitTotal: Number
+  },
+  feedback:{
+    question1: Number,
+    question2: Number,
+    question3: String
   }
 });
 
@@ -201,6 +206,11 @@ app.get('/api/me/questions', ensureAuthenticated, function(req, res) {
   });
 });
 
+app.get('/api/me/feedback', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    res.send(user.feedback);
+  });
+});
 
 app.get('/api/me/explicitquestions', ensureAuthenticated, function(req, res) {
   User.findById(req.user, function(err, user) {
@@ -247,6 +257,19 @@ app.put('/api/me/questions', ensureAuthenticated, function(req, res) {
     }
 
     user.questions = req.body.questions;
+    user.save(function(err) {
+      res.status(200).end();
+    });
+  });
+});
+
+app.put('/api/me/feedback', ensureAuthenticated, function(req, res) {
+  User.findById(req.user, function(err, user) {
+    if (!user) {
+      return res.status(400).send({ message: 'User not found' });
+    }
+
+    user.feedback = req.body.feedback;
     user.save(function(err) {
       res.status(200).end();
     });
