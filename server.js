@@ -91,7 +91,8 @@ var userSchema = new mongoose.Schema({
   feedback:{
     question1: Number,
     question2: Number,
-    question3: String
+    question3: Number,
+    question4: String
   }
 });
 
